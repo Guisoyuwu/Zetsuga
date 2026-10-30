@@ -3,14 +3,14 @@
 ## ⚠️ Estado real del proyecto (léelo primero)
 - **Código escrito pero NO compilado ni probado en el juego.** El entorno donde se generó no tenía acceso a internet ni Gradle, por lo que no se pudo ejecutar `./gradlew clean build`, no hay `.jar` y no se probó nada en Minecraft.
 - Minecraft 1.21.11 cambió varias APIs (sistema de permisos, `Identifier`, `teleportTo`, `hurtServer`…). Se escribió con mappings oficiales de Mojang según lo mejor conocido; es **probable que haya 1–5 errores de compilación puntuales** (ver "Puntos a verificar").
-- `gradle-wrapper.jar` es un binario que no se pudo generar. Se incluye `gradle-wrapper.properties`; ejecuta una vez `gradle wrapper --gradle-version 8.14.3` (o deja que lo haga el workflow de GitHub Actions, que ya lo hace solo).
+- El ZIP incluye `gradle-wrapper.properties`, pero no el binario `gradle-wrapper.jar` ni los scripts `gradlew`/`gradlew.bat` (no se pudieron descargar desde este entorno). El workflow de GitHub Actions instala Gradle 9.2.1 y genera el Wrapper automáticamente antes de compilar.
 
 ## Compilar
 ```
-gradle wrapper --gradle-version 8.14.3   # solo la primera vez
+gradle wrapper --gradle-version 9.2.1 --distribution-type bin
 ./gradlew clean build                    # JAR en build/libs/zangetsu-mod-1.0.0.jar
 ```
-Antes: abre https://fabricmc.net/develop/ y ajusta en `gradle.properties` `loader_version`, `loom_version` y `fabric_version` a lo que indique para 1.21.11 (los valores incluidos son estimaciones).
+Versiones fijadas para esta corrección: Minecraft 1.21.11, Java 21, Fabric Loom 1.14.10 y Gradle 9.2.1. Las versiones de Loader y Fabric API incluidas en `gradle.properties` se mantienen; conviene contrastarlas con Fabric Develop si se actualiza el proyecto.
 
 ## Instalación
 Servidor **y** clientes necesitan Fabric Loader + Fabric API + este JAR (el HUD del timer y el modelo de Zangetsu son del lado cliente).
